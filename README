@@ -1,0 +1,119 @@
+--> The program fsaccess.c has been successfully tested using GCC compiler on csgrads1.utdallas.edu
+
+--> The program supports file transfers upto 32 MB (tested successfully).
+
+--> The program supports "ls" command to display the files in the present working directory
+    - if the directory is present it will be displayed as /<directory_name>
+    - if it is a file it will be displayed just as <file_name>
+
+--> To compile this program, execute "gcc -o fsaccess fsaccess.c"
+
+--> This creates an output file named "fsaccess"
+
+--> To run this output file, execute "./fsaccess"
+
+--> If the filesystem (file/disk) is already in existence and if you dont want to re-initialize it, then just execute 
+    $ ./fsaccess <path to the disk>
+    with this you will be able to directly access the filesystem using commands cpin, cpout or mkdir
+
+1) To initialize a new disk or the same disk (filesystem), execute :-
+
+    >> initfs /home/amber/disk 65000 300
+
+2) To create a new directory any of the below two can be used to execute :-
+    >> mkdir /<directory_name>
+    >> mkdir /<directory_name>/
+
+3) To copy an external file into the filesystem's internal file (with name sample.c) execute :-
+    >> cpin /home/amber/test.txt /sample.txt      // sample.txt file will be created inside myV6_filesystem with the
+                                                    contents of test.txt.
+    >> cpin /home/amber/test.txt /                // test.txt will be copied in with same name into myV6_filesystem 
+
+3) To see that the file has been created or not, execute 
+    >> ls <path_of_the_directory>       // path_of _the_directory is the complete path whose contents needs to be displayed
+ ex : >> ls /        //displays all the files and directories in the pwd
+
+3) To copy filesystem's internal file to an external file(named test_1.c) execute :-
+    >> cpout /sample.txt /home/amber/test_1.txt   // This will create a file test_1.txt with the contents of sample.txt
+    >> cpout /sample.txt /home/amber/             // This will create and copy the file sample.txt to /home/amber/
+
+NOTE : The above "initfs" with total 65000 blocks provides the capability of storing a 32 MB file (file transfers of size <= 32 MB are supported)
+
+--> To check "mkdir", execute this command in the program shell and execute "ls 'directory path strating from /'" (Please see the DEMO at the end)
+
+--> Also the typescript is present in the project tar file
+
+
+SAMPLE TERMINAL RUN DEMO (for file transfer)
+-------------------------------------------------------------------------------------
+
+{csgrads1:~} cd Project_3/
+{csgrads1:~/Project_3} gcc -o fsaccess fsaccess.c
+{csgrads1:~/Project_3} ll
+total 31158
+drwx--x--x  2 spj150230 ce     1024 Dec  3 19:43 .
+drwx--x--x 10 spj150230 ce     1024 Dec  3 11:33 ..
+-rwx--x--x  1 spj150230 ce    30788 Dec  3 19:43 fsaccess
+-rw-------  1 spj150230 ce    48183 Dec  3 19:34 fsaccess.c
+-rw-------  1 spj150230 ce     1177 Dec  3 19:42 .nfs0000000000138b7f00000ba9
+-rw-------  1 spj150230 ce        0 Dec  3 19:30 .nfs00000000001b5f0400000ba8
+-rw-------  1 spj150230 ce      488 Dec  3 19:34 struct.h
+-rw-------  1 spj150230 ce 31811444 Dec  3 19:36 test.c
+-rw-------  1 spj150230 ce        0 Dec  3 19:43 typescript
+{csgrads1:~/Project_3}
+{csgrads1:~/Project_3}
+{csgrads1:~/Project_3} ./fsaccess
+>>initfs /home/005/s/sp/spj150230/Project_3/disk 65000 300
+>>cpin /home/005/s/sp/spj150230/Project_3/test.c /sample.txt
+File size = 31811445
+>>ls /
+sample.txt
+>>cpout /sample.txt /home/005/s/sp/spj150230/Project_3/test_copied.txt
+copy to file : size = 31811444
+copy completed.
+>>q
+{csgrads1:~/Project_3}
+{csgrads1:~/Project_3}
+{csgrads1:~/Project_3}
+{csgrads1:~/Project_3} ll
+total 95178
+drwx--x--x  2 spj150230 ce     1024 Dec  3 19:44 .
+drwx--x--x 10 spj150230 ce     1024 Dec  3 11:33 ..
+-rw-------  1 spj150230 ce 32005120 Dec  3 19:44 disk
+-rwx--x--x  1 spj150230 ce    30788 Dec  3 19:43 fsaccess
+-rw-------  1 spj150230 ce    48183 Dec  3 19:34 fsaccess.c
+-rw-------  1 spj150230 ce     1177 Dec  3 19:42 .nfs0000000000138b7f00000ba9
+-rw-------  1 spj150230 ce        0 Dec  3 19:30 .nfs00000000001b5f0400000ba8
+-rw-------  1 spj150230 ce      488 Dec  3 19:34 struct.h
+-rw-------  1 spj150230 ce 31811444 Dec  3 19:36 test.c
+-rw-------  1 spj150230 ce 31811444 Dec  3 19:44 test_copied.txt
+-rw-------  1 spj150230 ce        0 Dec  3 19:43 typescript
+{csgrads1:~/Project_3}
+{csgrads1:~/Project_3}
+{csgrads1:~/Project_3} #YOU CAN SEE THAT THE SIZE OF test.c and test_copied.txt ARE SAME
+{csgrads1:~/Project_3}
+----------------------------------------------------------------------------------------
+
+
+
+SAMPLE TERMINAL RUN DEMO (for mkdir)
+----------------------------------------------------------------------------------------
+
+{csgrads1:~/Project_3} ./fsaccess
+>>initfs /home/005/s/sp/spj150230/Project_3/disk 1000 300
+>>ls /
+>>mkdir /sumit
+directory sumit is created successfully
+>>ls /
+/sumit
+>>mkdir /sumit/varun
+directory varun is created successfully
+>>ls /sumit
+/varun
+>>mkdir /sumit/varun/os
+directory os is created successfully
+>>ls /sumit/varun
+/os
+>>
+
+----------------------------------------------------------------------------------------
