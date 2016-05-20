@@ -1,4 +1,4 @@
---> The program fsaccess.c has been successfully tested using GCC compiler on csgrads1.utdallas.edu
+UNIX V6 Filesystem to support copy in of 32 MB which otherwise had support only for 16 MB
 
 --> The program supports file transfers upto 32 MB (tested successfully).
 
